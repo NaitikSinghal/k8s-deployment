@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: superset
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: superset
+  template:
+    metadata:
+      labels:
+        app: superset
+    spec:
+      containers:
+        - name: superset
+          image: naitik01/superset:latest
+          ports:
+            - containerPort: 8088
+          env:
+            - name: SUPERSET_ENV
+              value: production
+            - name: SUPERSET_SECRET_KEY
+              value: "bx4z2H%jrGo0"  
+            - name: SUPERSET_DATABASE_URI
+              value: "postgresql+psycopg2://superset_user:superset_password@postgres:5432/superset_db"
+            - name: REDIS_HOST
+              value: "redis"
+            - name: REDIS_PORT
+              value: "6379"
