@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: superset-init
+spec:
+  template:
+    spec:
+      containers:
+        - name: superset-init
+          image: apache/superset:latest
+          command: ["/app/docker/docker-init.sh"]
+          env:
+            - name: SUPERSET_ENV
+              value: "production"
+          volumeMounts:
+            - name: init-volumes
+              mountPath: /app/superset
+      volumes:
+        - name: init-volumes
+          emptyDir: {}
+      restartPolicy: OnFailure

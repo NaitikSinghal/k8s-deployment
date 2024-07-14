@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: superset-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: superset-worker
+  template:
+    metadata:
+      labels:
+        app: superset-worker
+    spec:
+      containers:
+        - name: superset-worker
+          image: apache/superset:latest
+          command: ["/app/docker/docker-bootstrap.sh", "worker"]
+          env:
+            - name: CELERYD_CONCURRENCY
+              value: "2"
+            - name: SUPERSET_ENV
+              value: "production"
+          volumeMounts:
+            - name: worker-volumes
+              mountPath: /app/superset
+      volumes:
+        - name: worker-volumes
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: superset-worker
+spec:
+  ports:
+    - port: 8000
+      targetPort: 8000
+  selector:
+    app: superset-worker

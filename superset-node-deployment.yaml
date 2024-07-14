@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: superset-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: superset-node
+  template:
+    metadata:
+      labels:
+        app: superset-node
+    spec:
+      containers:
+        - name: superset-node
+          image: node:18
+          command: ["/app/docker/docker-frontend.sh"]
+          env:
+            - name: SCARF_ANALYTICS
+              value: "false"
+          volumeMounts:
+            - name: node-volumes
+              mountPath: /app/superset-frontend
+      volumes:
+        - name: node-volumes
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: superset-node
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: superset-node
