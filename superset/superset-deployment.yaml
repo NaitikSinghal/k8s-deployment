@@ -23,7 +23,7 @@ spec:
             - name: SUPERSET_SECRET_KEY
               value: "bx4z2H%jrGo0"  
             - name: SUPERSET_DATABASE_URI
-              value: "postgresql+psycopg2://superset_user:superset_password@postgres:5432/superset_db"
+              value: "postgresql://superset_user:superset_password@postgres:5432/superset_db"
             - name: REDIS_HOST
               value: "redis"
             - name: REDIS_PORT
