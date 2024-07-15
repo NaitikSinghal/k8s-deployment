@@ -83,5 +83,5 @@ kubectl get service
 ### 7. Access the superset service
 
 ```
-minikube sesrvice superset-service --url
+minikube service superset-service --url
 ```
