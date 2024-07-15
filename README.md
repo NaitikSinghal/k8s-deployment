@@ -53,7 +53,7 @@ CREATE USER superset_user WITH PASSWORD 'superset_password';
 GRANT ALL PRIVILEGES ON DATABASE superset_db TO superset_user;
 ```
 Once this is done, we will pass the postgres URI to Superset yaml file to specify the connection details needed for Superset to communicate with the PostgreSQL database.
-i.e :  ``` "postgresql+psycopg2://superset_user:superset_password@postgres:5432/superset_db" ```
+i.e :  ``` "postgresql://superset_user:superset_password@postgres:5432/superset_db" ```
 
 ### 4. Deploy redis service
 
