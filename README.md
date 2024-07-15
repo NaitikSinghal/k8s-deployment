@@ -32,28 +32,30 @@ kubectl apply -f clickhouse/clickhouse-pvc.yaml
 kubectl apply -f clickhouse/clickhouse-service.yaml
 
 ```
+Check if the clickhouse pod is running, Go inside the clickhouse container and create Username, Password, and a database with following command.
+
+```
+kubectl exec -it <clickhouse-pod-name> -- bash
+```
+
+```
+CREATE DATABASE database_name;
+```
+```
+CREATE USER username IDENTIFIED WITH plaintext_password BY 'password';
+```
+
+```
+GRANT ALL ON database_name.* TO username;
+```
+Once this is done, the clickhouse uri will be something like this -> ```clickhousedb://username:password@clickhouse:9000/database_name```
+Use this URI to connect it with superset.
 ### 3. Deploy the postgres service 
 
 ```
 kubectl apply -f postgres/postgres-deployment.yaml
 kubectl apply -f postgres/postgres-service.yaml
 ```
-Check if the postgres pod is running, Go inside the postgres container and create a Username, Password, and a database 'superset_db' with following commands.
-
-```
-kubectl exec -it <postgres-pod-name> -- psql -U postgres
-```
-check your postgres pod name here with the below command and paste it in above command.
-```
-kubectl get pods
-```
-```
-CREATE DATABASE superset_db;
-CREATE USER superset_user WITH PASSWORD 'superset_password';
-GRANT ALL PRIVILEGES ON DATABASE superset_db TO superset_user;
-```
-Once this is done, we will pass the postgres URI to Superset yaml file to specify the connection details needed for Superset to communicate with the PostgreSQL database.
-i.e :  ``` "postgresql://superset_user:superset_password@postgres:5432/superset_db" ```
 
 ### 4. Deploy redis service
 
