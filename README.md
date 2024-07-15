@@ -80,4 +80,8 @@ kubectl get pods
 kubectl get service
 ```
 
+### 7. Access the superset service
 
+```
+minikube sesrvice superset-service --url
+```
