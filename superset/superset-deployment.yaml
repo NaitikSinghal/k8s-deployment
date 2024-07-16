@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: superset
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: superset
+  template:
+    metadata:
+      labels:
+        app: superset
+    spec:
+      containers:
+        - name: superset
+          image: apache/superset:latest
+          ports:
+            - containerPort: 8088
+          env:
+            - name: SUPERSET_ENV
+              value: production
+            - name: SUPERSET_SECRET_KEY
+              value: "bx4z2H%jrGo0"  
+            - name: SUPERSET_USERNAME
+              value: "admin"
+            - name: SUPERSET_PASSWORD
+              value: "admin"
+            - name: SUPERSET_DATABASE
+              value: "database"
+            - name: SUPERSET_EMAIL_ID
+              value: "admin@test.org"
+            - name: CLICKHOUSE_PORT
+              value: "9000"
