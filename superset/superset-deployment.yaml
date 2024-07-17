@@ -23,8 +23,12 @@ spec:
             - name: SUPERSET_SECRET_KEY
               value: "bx4z2H%jrGo0"  
             - name: SUPERSET_DATABASE_URI
-              value: "postgresql://superset_user:superset_password@postgres:5432/superset_db"
-            - name: REDIS_HOST
-              value: "redis"
-            - name: REDIS_PORT
-              value: "6379"
+              value: "clickhousedb://superset_user:superset_password@clickhouse:9000/superset_db"
+            - name: CLICKHOUSE_USER
+              value: "superset_user"
+            - name: CLICKHOUSE_PASSWORD
+              value: "superset_password"
+            - name: CLICKHOUSE_DB
+              value: "superset_db"
+            - name: CLICKHOUSE_PORT
+              value: "9000"

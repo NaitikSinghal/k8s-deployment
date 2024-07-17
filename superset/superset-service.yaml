@@ -8,4 +8,4 @@ spec:
       targetPort: 8088
   selector:
     app: superset
-  type: LoadBalancer
+  type: NodePort

@@ -18,6 +18,13 @@ spec:
           image: clickhouse/clickhouse-server:latest
           ports:
             - containerPort: 9000
+          env:
+            - name: CLICKHOUSE_USER
+              value: "superset_user"
+            - name: CLICKHOUSE_PASSWORD
+              value: "superset_password"
+            - name: CLICKHOUSE_DB
+              value: "superset_db"
           volumeMounts:
             - name: clickhouse-storage
               mountPath: /var/lib/clickhouse
