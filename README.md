@@ -39,16 +39,16 @@ kubectl exec -it <clickhouse-pod-name> -- bash
 ```
 
 ```
-CREATE DATABASE database_name;
+CREATE DATABASE superset_db;
 ```
 ```
-CREATE USER username IDENTIFIED WITH plaintext_password BY 'password';
+CREATE USER superset_user IDENTIFIED WITH plaintext_password BY 'superset_password';
 ```
 
 ```
-GRANT ALL ON database_name.* TO username;
+GRANT ALL ON database_name.* TO superset_user;
 ```
-Once this is done, the clickhouse uri will be something like this -> ```clickhousedb://username:password@clickhouse:9000/database_name```
+Once this is done, the clickhouse uri will be something like this -> ```clickhousedb://superset_user:superset_password@clickhouse:9000/superset_db```
 Use this URI to connect it with superset.
 ### 3. Deploy the postgres service 
 
@@ -71,6 +71,7 @@ kubectl apply -f superset/superset-deployment.yaml
 kubectl apply -f superset/superset-service.yaml
 
 ```
+
 ### 6. Check the pods and services 
 
 ```
@@ -84,4 +85,23 @@ kubectl get service
 
 ```
 minikube service superset-service --url
+```
+
+### 8. If Superset shows 500:internal server error
+
+Run this commands to create a admin-user for superset,
+
+```
+kubectl exec -it <superset pod> -- /bin/bash
+```
+```
+superset fab create-admin
+```
+```
+superset fab create-permissions
+```
+#### Don't forget to install this package for clickhouse connection
+
+```
+pip install clickhouse-connect
 ```
